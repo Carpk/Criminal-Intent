@@ -41,11 +41,13 @@ public class Crime {
     }
 
     public Crime() {
-
         // Generate unique identifier
         mId = UUID.randomUUID();
         mDate = new Date();
     }
 
-
+    @Override
+    public String toString() {
+        return mTitle;
+    }
 }
