@@ -45,20 +45,18 @@ public class CrimeListFragment extends ListFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView =
-                        getActivity().getLayoutInflater().inflate(R.layout.list_item_crime, null);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_crime, null);
             }
 
             Crime c = getItem(position);
 
-            TextView titleTextView =
-                    (TextView)convertView.findViewById(R.id.crime_list_item_titleTextView);
+            TextView titleTextView = (TextView)convertView.findViewById(R.id.crime_list_item_titleTextView);
             titleTextView.setText(c.getTitle());
-            TextView dateTextView =
-                    (TextView)convertView.findViewById(R.id.crime_list_item_dateTextView);
+
+            TextView dateTextView = (TextView)convertView.findViewById(R.id.crime_list_item_dateTextView);
             dateTextView.setText(c.getDate().toString());
-            CheckBox solvedCheckBox =
-                    (CheckBox)convertView.findViewById(R.id.crime_list_item_solvedCheckBox);
+
+            CheckBox solvedCheckBox = (CheckBox)convertView.findViewById(R.id.crime_list_item_solvedCheckBox);
             solvedCheckBox.setChecked(c.isSolved());
 
             return convertView;
