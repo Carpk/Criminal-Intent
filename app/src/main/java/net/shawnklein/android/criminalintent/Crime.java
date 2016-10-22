@@ -32,7 +32,6 @@ public class Crime {
     }
 
     public String getTitle() {
-
         return mTitle;
     }
 
@@ -41,7 +40,6 @@ public class Crime {
     }
 
     public Crime() {
-        // Generate unique identifier
         mId = UUID.randomUUID();
         mDate = new Date();
     }
