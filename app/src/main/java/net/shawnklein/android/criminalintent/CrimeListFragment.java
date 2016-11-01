@@ -63,7 +63,7 @@ public class CrimeListFragment extends ListFragment {
         } else {
             listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
             listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-                public void onItemCheckedStateChanges(ActionMode, int position, long id, boolean checked) {}
+                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {}
 
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                     MenuInflater inflater = mode.getMenuInflater();
@@ -75,13 +75,14 @@ public class CrimeListFragment extends ListFragment {
                     return false;
                 }
 
-                public boolean onActionITemClicked(ActionMode mode, MenuItem item) {
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.menu_item_delete_crime:
                             CrimeAdapter adapter = (CrimeAdapter)getListAdapter();
                             CrimeLab crimeLab = CrimeLab.get(getActivity());
                             for (int i = adapter.getCount() - 1; i >= 0; i--) {
                                 if (getListView().isItemChecked(i)) {
+                                    System.out.println("DELETING THIS GUY: " + adapter.getItem(i));
                                     crimeLab.deleteCrime(adapter.getItem(i));
                                 }
                             }
