@@ -82,7 +82,6 @@ public class CrimeListFragment extends ListFragment {
                             CrimeLab crimeLab = CrimeLab.get(getActivity());
                             for (int i = adapter.getCount() - 1; i >= 0; i--) {
                                 if (getListView().isItemChecked(i)) {
-                                    System.out.println("DELETING THIS GUY: " + adapter.getItem(i));
                                     crimeLab.deleteCrime(adapter.getItem(i));
                                 }
                             }
