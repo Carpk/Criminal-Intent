@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class CrimeCameraFragment extends Fragment {
@@ -45,7 +47,7 @@ public class CrimeCameraFragment extends Fragment {
                         mCamera.setPreviewDisplay(holder);
                     }
                 } catch (IOException exception) {
-                    Log.e(TAG, "Error setting up preview display", exception)
+                    Log.e(TAG, "Error setting up preview display", exception);
                 }
             }
 
@@ -59,7 +61,7 @@ public class CrimeCameraFragment extends Fragment {
                 if (mCamera == null) return;
 
                 Camera.Parameters parameters = mCamera.getParameters();
-                Camera.Size s = null;
+                Camera.Size s = getBestSupportedSize(parameters.getSupportedPreviewSizes(), w, h);
                 parameters.setPreviewSize(s.width, s.height);
                 mCamera.setParameters(parameters);
                 try {
@@ -96,4 +98,19 @@ public class CrimeCameraFragment extends Fragment {
             mCamera = null;
         }
     }
+
+    @SuppressWarnings("deprecation")
+    private Camera.Size getBestSupportedSize(List<Camera.Size> sizes, int width, int height) {
+        Camera.Size bestSize = sizes.get(0);
+        int largestArea = bestSize.width * bestSize.height;
+        for (Camera.Size s : sizes) {
+            int area = s.width * s.height;
+            if (area > largestArea) {
+                bestSize = s;
+                largestArea = area;
+            }
+        }
+        return bestSize;
+    }
+
 }
