@@ -13,6 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
     public static final String EXTRA_CRIME_ID =
             "net.shawnklein.android.criminalintent.crime_id";
+    private static final String TAG = "CrimeFragment";
     private static final String DIALOG_DATE = "date";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 1;
@@ -134,6 +136,11 @@ public class CrimeFragment extends Fragment {
             Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
             updateDate();
+        } else if (requestCode == REQUEST_PHOTO){
+            String filename = data.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
+            if (filename != null) {
+                Log.i(TAG, "filename: " + filename);
+            }
         }
     }
 

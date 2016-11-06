@@ -45,7 +45,7 @@ public class CrimeCameraFragment extends Fragment {
             String filename = UUID.randomUUID().toString() + ".jpg";
             FileOutputStream os = null;
             boolean success = true;
-            
+
             try {
                 os = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
                 os.write(data);
