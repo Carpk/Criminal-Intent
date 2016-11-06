@@ -1,6 +1,8 @@
 package net.shawnklein.android.criminalintent;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import java.util.UUID;
 public class CrimeCameraFragment extends Fragment {
     private static final String TAG = "CrimeCameraFragment";
 
+    public static final String EXTRA_PHOTO_FILENAME = "net.shawnklein.android.criminalintent.photo_filename";
+
     private Camera mCamera;
     private SurfaceView mSurfaceView;
     private View mProgressContainer;
@@ -41,6 +45,7 @@ public class CrimeCameraFragment extends Fragment {
             String filename = UUID.randomUUID().toString() + ".jpg";
             FileOutputStream os = null;
             boolean success = true;
+            
             try {
                 os = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
                 os.write(data);
@@ -56,9 +61,16 @@ public class CrimeCameraFragment extends Fragment {
                     success = false;
                 }
             }
+
             if (success) {
                 Log.i(TAG, "JPEG saved at " + filename);
+                Intent i = new Intent();
+                i.putExtra(EXTRA_PHOTO_FILENAME, filename);
+                getActivity().setResult(Activity.RESULT_OK, i);
+            } else {
+                getActivity().setResult(Activity.RESULT_CANCELED);
             }
+
             getActivity().finish();
         }
     };
@@ -74,7 +86,9 @@ public class CrimeCameraFragment extends Fragment {
         Button takePictureButton = (Button)v.findViewById(R.id.crime_camera_takePictureButton);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getActivity().finish();
+                if (mCamera != null) {
+                    mCamera.takePicture(mShutterCallback, null, mJpegCallback);
+                }
             }
         });
         mSurfaceView = (SurfaceView)v.findViewById(R.id.crime_camera_surfaceView);
@@ -105,6 +119,8 @@ public class CrimeCameraFragment extends Fragment {
                 Camera.Parameters parameters = mCamera.getParameters();
                 Camera.Size s = getBestSupportedSize(parameters.getSupportedPreviewSizes(), w, h);
                 parameters.setPreviewSize(s.width, s.height);
+                s = getBestSupportedSize(parameters.getSupportedPictureSizes(), w, h);
+                parameters.setPictureSize(s.width, s.height);
                 mCamera.setParameters(parameters);
                 try {
                     mCamera.startPreview();
