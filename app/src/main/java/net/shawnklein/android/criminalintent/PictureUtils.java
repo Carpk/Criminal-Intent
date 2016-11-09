@@ -32,7 +32,7 @@ public class PictureUtils {
 
         options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize;
-        
+
         Bitmap bitmap = BitmapFactory.decodeFile(path, options);
         return new BitmapDrawable(a.getResources(), bitmap);
     }

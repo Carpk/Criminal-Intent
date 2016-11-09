@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -123,6 +124,22 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    private void showPhoto() {
+        Photo p = mCrime.getPhoto();
+        BitmapDrawable b = null;
+        if (p != null) {
+            String path = getActivity().getFileStreamPath(p.getFilename()).getAbsolutePath();
+            b = PictureUtils.getScaledDrawable(getActivity(), path);
+        }
+        mPhotoView.setImageDrawable(b);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showPhoto();
+    }
+
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_CRIME_ID, crimeId);
@@ -147,7 +164,8 @@ public class CrimeFragment extends Fragment {
 
                 Photo p = new Photo(filename);
                 mCrime.setPhoto(p);
-                Log.i(TAG, "CRIME: " + mCrime.getTitle() + " has a phtoto");
+                showPhoto();
+                Log.i(TAG, "CRIME: " + mCrime.getTitle() + " has a photo");
             }
         }
     }
