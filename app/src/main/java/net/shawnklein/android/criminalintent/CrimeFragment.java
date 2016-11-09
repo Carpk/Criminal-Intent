@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import java.util.Date;
 import java.util.UUID;
@@ -39,6 +40,7 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     private ImageButton mPhotoButton;
+    private ImageView mPhotoView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,8 @@ public class CrimeFragment extends Fragment {
                 startActivityForResult(i, REQUEST_PHOTO);
             }
         });
+
+        mPhotoView = (ImageView)v.findViewById(R.id.crime_imageView);
 
         PackageManager pm = getActivity().getPackageManager();
         boolean hasACamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) ||
