@@ -23,7 +23,7 @@
                 android:layout_height="80dp"
                 android:scaleType="centerInside"
                 android:background="@android:color/darker_gray"
-                android:croptoPadding="true"/>
+                android:cropToPadding="true"/>
 
             <ImageButton
                 android:id="@+id/crime_imageButton"
