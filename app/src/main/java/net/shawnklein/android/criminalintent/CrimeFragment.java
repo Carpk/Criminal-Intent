@@ -140,6 +140,12 @@ public class CrimeFragment extends Fragment {
         showPhoto();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        PictureUtils.cleanImageView(mPhotoView);
+    }
+
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_CRIME_ID, crimeId);
