@@ -222,7 +222,6 @@ public class CrimeFragment extends Fragment {
             };
 
             Cursor c = getActivity().getContentResolver().query(contactUri, queryFields, null, null, null);
-
             if (c.getCount() == 0) {
                 c.close();
                 return;
