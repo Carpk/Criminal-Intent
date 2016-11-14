@@ -1,6 +1,7 @@
 package net.shawnklein.android.criminalintent;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,9 +27,27 @@ import java.util.ArrayList;
 import static android.R.attr.mode;
 
 public class CrimeListFragment extends ListFragment {
+    private static final String TAG = "CrimeListFragment";
     private ArrayList<Crime> mCrimes;
     private boolean mSubtitleVisible;
-    private static final String TAG = "CrimeListFragment";
+    private Callbacks mCallbacks;
+
+
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks)activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
