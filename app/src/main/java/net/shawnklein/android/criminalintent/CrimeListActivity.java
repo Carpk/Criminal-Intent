@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 
-public class CrimeListActivity extends SingleFragmentActivity implements CrimeListFragment.Callbacks {
+public class CrimeListActivity extends SingleFragmentActivity
+        implements CrimeListFragment.Callbacks, CrimeFragment.Callbacks {
 
     @Override
     protected Fragment createFragment() {
@@ -36,5 +38,11 @@ public class CrimeListActivity extends SingleFragmentActivity implements CrimeLi
             ft.add(R.id.detailFragmentContainer, newDetail);
             ft.commit();
         }
+    }
+
+    public void onCrimeUpdated(Crime crime) {
+        FragmentManager fm = getSupportFragmentManager();
+        CrimeListFragment listFragment = (CrimeListFragment)fm.findFragmentById(R.id.fragmentContainer);
+        listFragment.updateUI();
     }
 }
